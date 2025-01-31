@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recommended Shows and Movies</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        .shelf {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .item {
+            position: relative;
+            width: 200px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .item:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 15px rgba(255, 255, 255, 0.8);
+        }
+
+        .poster {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+        }
+
+        .info {
+            padding: 10px;
+        }
+
+        .title {
+            font-size: 1.2em;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .rating {
+            color: #f39c12;
+            margin-bottom: 10px;
+        }
+
+        .summary {
+            font-size: 0.9em;
+            color: #555;
+        }
+
+    </style>
+</head>
+<body>
+    <h1 style="text-align: center;">Recommended Shows and Movies</h1>
+    <div class="shelf">
+        <div class="item">
+            <img src="https://cdn.glitch.global/d4de6fed-5b19-49a2-8d65-e9cff2698ca9/11ac814132de812dbce98fec0105d797.jpg?v=1734943952807" alt="Show Poster" class="poster">
+            <div class="info">
+                <div class="title">White Chicks</div>
+                <div class="rating">⭐ 8.5/10</div>
+                <div class="summary">Two FBI agents, Kevin and Marcus Copeland, go undercover as wealthy, white socialite sisters to thwart a kidnapping plot. As they navigate high-society chaos, hilarious mishaps ensue, leading to unexpected friendships and a deeper understanding of themselves. </div>
+            </div>
+        </div>
+        <div class="item">
+            <img src="https://cdn.glitch.global/d4de6fed-5b19-49a2-8d65-e9cff2698ca9/e5f145edb7de96af9935f2dd01b1055d.jpg?v=1734943953278" alt="Show Poster" class="poster">
+            <div class="info">
+                <div class="title">Pride and Prejudice</div>
+                <div class="rating">⭐ 9.2/10</div>
+                <div class="summary">In *Pride and Prejudice*, Elizabeth Bennet navigates societal expectations, family pressures, and her own prejudices while sparring with the enigmatic Mr. Darcy. Through misunderstandings and revelations, the two overcome pride and assumptions, ultimately finding love and mutual respect. A timeless tale of romance and self-discovery.</div>
+            </div>
+        </div>
+        <div class="item">
+            <img src="https://cdn.glitch.global/d4de6fed-5b19-49a2-8d65-e9cff2698ca9/896539e920c8a3eba87afb56abcbfb2e.jpg?v=1734943954180" alt="Show Poster" class="poster">
+            <div class="info">
+                <div class="title">The Devil Wears Prada</div>
+                <div class="rating">⭐ 8.8/10</div>
+                <div class="summary">In *The Devil Wears Prada*, aspiring journalist Andy Sachs lands a job as an assistant to Miranda Priestly, the demanding editor of a high-fashion magazine. As Andy struggles to balance her personal life with the job's intense demands, she learns about ambition, sacrifice, and staying true to herself in a cutthroat industry.</div>
+            </div>
+        </div>
+        <div class="item">
+            <img src="https://cdn.glitch.global/d4de6fed-5b19-49a2-8d65-e9cff2698ca9/download%20(3).jpg?v=1734943957913" alt="Show Poster" class="poster">
+            <div class="info">
+                <div class="title">Legally Blonde</div>
+                <div class="rating">⭐ 9.3/10</div>
+                <div class="summary">In *Legally Blonde*, Elle Woods, a fashion-savvy sorority queen, enrolls at Harvard Law School to win back her ex-boyfriend. Along the way, she defies stereotypes, proves her intelligence, and discovers her true potential as a confident and capable lawyer, inspiring others with her charm and determination.</div>
+            </div>
+        </div>
+        <div class="item">
+            <img src="https://cdn.glitch.global/d4de6fed-5b19-49a2-8d65-e9cff2698ca9/download%20(11).jpg?v=1734944684740" alt="Show Poster" class="poster">
+            <div class="info">
+                <div class="title">Haikyuu</div>
+                <div class="rating">⭐ 8.7/10</div>
+                <div class="summary">In *Haikyuu!!*, Shoyo Hinata, a passionate but undersized volleyball player, dreams of becoming a star like his idol, the "Little Giant." After joining Karasuno High's volleyball team, he teams up with his rival-turned-teammate, Tobio Kageyama, to lead the underdog team to greatness. Through intense matches, friendships, and personal growth, the series showcases the power of teamwork and perseverance.</div>
+            </div>
+        </div>
+        <div class="item">
+            <img src="https://cdn.glitch.global/d4de6fed-5b19-49a2-8d65-e9cff2698ca9/download%20(10).jpg?v=1734944682337" alt="Show Poster" class="poster">
+            <div class="info">
+                <div class="title">Interstellar</div>
+                <div class="rating">⭐ 10/10</div>
+                <div class="summary">In *Interstellar*, Earth faces a bleak future as climate change threatens humanity's survival. Former pilot Cooper joins a daring mission to find a new home for mankind, traveling through a wormhole to distant planets. As time bends and sacrifices mount, the story explores love, survival, and humanity's connection to the cosmos in a gripping sci-fi journey.</div>
+            </div>
+        </div>
+        <div class="item">
+            <img src="https://cdn.glitch.global/d4de6fed-5b19-49a2-8d65-e9cff2698ca9/download%20(4).jpg?v=1734944682125" alt="Show Poster" class="poster">
+            <div class="info">
+                <div class="title">500 days of summer </div>
+                <div class="rating">⭐ 7.3/10</div>
+                <div class="summary"> In *500 Days of Summer*, Tom, a romantic idealist, reflects on his rollercoaster relationship with Summer, a free-spirited woman who doesn't believe in true love. Through non-linear storytelling, the film explores the highs and lows of love, heartbreak, and self-discovery, challenging the idea of soulmates and destiny. </div>
+            </div>
+        </div>
+        <div class="item">
+            <img src="https://cdn.glitch.global/d4de6fed-5b19-49a2-8d65-e9cff2698ca9/Fruits%20Basket%20minimal%20poster%20_%20minimal%20anime%20poster.jpg?v=1734944686209" alt="Show Poster" class="poster">
+            <div class="info">
+                <div class="title">Fruit Basket</div>
+                <div class="rating">⭐ 9.3/10</div>
+                <div class="summary">In *Fruits Basket*, kind-hearted orphan Tohru Honda stumbles upon the secret of the Sohma family: some members transform into animals of the Chinese Zodiac when hugged by the opposite gender. As she grows closer to them, Tohru helps heal their emotional scars with her compassion, uncovering a heartwarming tale of love, acceptance, and breaking curses.</div>
+            </div>
+        </div>
+        <div class="item">
+            <img src="https://cdn.glitch.global/d4de6fed-5b19-49a2-8d65-e9cff2698ca9/To%20All%20the%20Boys%20I%E2%80%99ve%20Loved%20Before%20by%20Megan.jpg?v=1734944683097" alt="Show Poster" class="poster">
+            <div class="info">
+                <div class="title">To all the boys I've loved before</div>
+                <div class="rating">⭐ 9.3/10</div>
+                <div class="summary">In *To All the Boys I've Loved Before*, Lara Jean Covey’s quiet high school life is turned upside down when her secret love letters to past crushes are accidentally sent out. As she navigates the fallout, a fake relationship with one recipient, Peter Kavinsky, leads to unexpected romance and self-discovery in this heartfelt coming-of-age story.</div>
+            </div>
+        </div>
+        <div class="item">
+            <img src="https://cdn.glitch.global/d4de6fed-5b19-49a2-8d65-e9cff2698ca9/a%20business%20proposal%20minimalist%20poster.jpg?v=1734945396289" alt="Show Poster" class="poster">
+            <div class="info">
+                <div class="title">Business Proposal</div>
+                <div class="rating">⭐ 9/10</div>
+                <div class="summary">A hardworking office employee, Shin Ha-ri, agrees to go on a blind date in place of her wealthy best friend, Jin Young-seo, intending to scare the suitor away. However, things take an unexpected turn when the man she meets is her company’s CEO, Kang Tae-mu, who decides to marry her—unaware of her true identity. Chaos and hilarity ensue as Ha-ri tries to keep her double life a secret while navigating their growing feelings for each other.</div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

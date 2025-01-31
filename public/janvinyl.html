@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music Player</title>
+    <style>
+        /* Existing CSS */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            text-align: center;
+            margin: 20px 0;
+            color: #333;
+        }
+
+        #vinyl {
+            position: relative;
+            width: 150px;
+            height: 150px;
+            background: radial-gradient(circle, #444 80%, #222);
+            border-radius: 50%;
+            margin: 20px auto;
+           animation: animName 7s linear infinite
+  
+        }
+
+        #vinyl::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 40px;
+            height: 40px;
+            background: #fff;
+            border-radius: 50%;
+  
+        }
+
+@keyframes animName {
+ 0%{
+    transform: rotate(0deg);
+   }
+100%{
+    transform: rotate(360deg);
+   }
+}
+
+
+
+        .controls {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .controls button {
+            padding: 10px 20px;
+            margin: 5px;
+            font-size: 18px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            background-color: #333;
+            color: #fff;
+        }
+
+        .controls input[type="range"] {
+            margin: 0 10px;
+            width: 150px;
+        }
+
+        #albumContainer {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .album-card {
+            width: 200px;
+            background: #fff;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin: 10px;
+            text-align: center;
+        }
+
+        .album-card img {
+            width: 100%;
+            border-radius: 8px;
+        }
+
+        .song-list {
+            margin-top: 10px;
+        }
+
+        .song-item {
+            background: #e7e7e7;
+            padding: 5px;
+            margin: 5px 0;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: background 0.2s;
+        }
+
+        .song-item:hover {
+            background: #d4d4d4;
+        }
+
+        .queue {
+            margin: 20px;
+            padding: 10px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .queue h2 {
+            text-align: center;
+        }
+
+        .queue-item {
+            background: #f9f9f9;
+            padding: 5px;
+            margin: 5px 0;
+            cursor: grab;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Music Player</h1>
+    <div id="vinyl"></div>
+
+    <div class="controls">
+        <button id="playPauseBtn">▶</button>
+        <button id="nextBtn">⏭</button>
+        <input type="range" id="volumeControl" min="0" max="100" value="50">
+    </div>
+
+    <div id="albumContainer"></div>
+
+    <div class="queue">
+        <h2>Queue</h2>
+        <div id="queueContainer">
+            <!-- Queue will be rendered here -->
+        </div>
+    </div>
+
+    <script>
+const albums = [
+    {
+        title: "Buzz",
+        artist: "NIKI",
+        cover: "https://cdn.glitch.global/10edd2b1-a2f6-491c-9ed9-6c5f317cd9e7/ab67616d0000b2734d3d3963c551df56736050f1.jpg?v=1734892264641",
+        songs: [
+            { title: "Focus", url: "https://cdn.glitch.global/10edd2b1-a2f6-491c-9ed9-6c5f317cd9e7/Focus.mp3?v=1734892527552" },
+            { title: "Did You Like Her in the Morning?", url: "https://cdn.glitch.global/10edd2b1-a2f6-491c-9ed9-6c5f317cd9e7/NIKI%20-%20Did%20You%20Like%20Her%20In%20The%20Morning_%20(Official%20Lyric%20Video).mp3?v=1734892663875" }
+        ]
+    },
+    {
+        title: "AM",
+        artist: "Arctic Monkeys",
+        cover: "https://cdn.glitch.global/10edd2b1-a2f6-491c-9ed9-6c5f317cd9e7/ab67616d0000b2734ae1c4c5c45aabe565499163.jpg?v=1734892283646",
+        songs: [
+            { title: "Knee Socks", url: "https://cdn.glitch.global/10edd2b1-a2f6-491c-9ed9-6c5f317cd9e7/Knee%20Socks.mp3?v=1734894132559" },
+            { title: "Do I Wanna Know?", url: "https://cdn.glitch.global/10edd2b1-a2f6-491c-9ed9-6c5f317cd9e7/Arctic%20Monkeys%20-%20Do%20I%20Wanna%20Know_.mp3?v=1734894130931" }
+        ]
+    }
+];
+
+const albumContainer = document.getElementById('albumContainer');
+const queueContainer = document.getElementById('queueContainer');
+const vinyl = document.getElementById('vinyl');
+const playPauseBtn = document.getElementById('playPauseBtn');
+const nextBtn = document.getElementById('nextBtn');
+const volumeControl = document.getElementById('volumeControl');
+let audio = new Audio();
+let isPlaying = false;
+let currentQueue = [];
+
+function renderAlbums() {
+    albums.forEach(album => {
+        const albumCard = document.createElement('div');
+        albumCard.className = 'album-card';
+        albumCard.innerHTML = `
+            <img src="${album.cover}" alt="${album.title} Cover">
+            <h3>${album.title}</h3>
+            <p>${album.artist}</p>
+            <div class="song-list">
+                ${album.songs.map(song => `<div class="song-item" data-url="${song.url}" data-cover="${album.cover}">${song.title}</div>`).join('')}
+            </div>
+        `;
+        albumCard.addEventListener('click', (e) => {
+            if (e.target.classList.contains('song-item')) {
+                const songUrl = e.target.getAttribute('data-url');
+                const songCover = e.target.getAttribute('data-cover');
+                addToQueue(songUrl, e.target.textContent, songCover);
+            }
+        });
+        albumContainer.appendChild(albumCard);
+    });
+}
+
+function addToQueue(songUrl, songTitle, songCover) {
+    currentQueue.push({ url: songUrl, title: songTitle, cover: songCover });
+    renderQueue();
+}
+
+function renderQueue() {
+    queueContainer.innerHTML = currentQueue.map(song => `
+        <div class="queue-item">${song.title}</div>
+    `).join('');
+}
+
+function togglePlayPause() {
+    if (isPlaying) {
+        audio.pause();
+        playPauseBtn.textContent = '▶';
+    } else {
+        if (audio.src === '' && currentQueue.length > 0) {
+            playNextSong();
+        } else {
+            audio.play();
+            playPauseBtn.textContent = '⏸';
+        }
+    }
+    isPlaying = !isPlaying;
+}
+
+function playNextSong() {
+    if (currentQueue.length > 0) {
+        const nextSong = currentQueue.shift();
+        renderQueue();
+        audio.src = nextSong.url;
+        vinyl.style.backgroundImage = `url('${nextSong.cover}')`; // Change vinyl to album cover
+        vinyl.style.backgroundSize = 'cover';
+        vinyl.style.backgroundPosition = 'center';
+        audio.play();
+        playPauseBtn.textContent = '⏸';
+        isPlaying = true;
+    } else {
+        playPauseBtn.textContent = '▶';
+        isPlaying = false;
+    }
+}
+
+audio.addEventListener('play', () => {
+    vinyl.classList.add('playing');
+});
+
+audio.addEventListener('pause', () => {
+    vinyl.classList.remove('playing');
+});
+
+audio.addEventListener('ended', () => {
+    playNextSong();
+});
+
+volumeControl.addEventListener('input', () => {
+    audio.volume = volumeControl.value / 100;
+
+});
+
+playPauseBtn.addEventListener('click', togglePlayPause);
+nextBtn.addEventListener('click', playNextSong);
+
+renderAlbums();
+
+    </script>
+</body>
+</html>

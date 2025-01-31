@@ -1,0 +1,103 @@
+
+html, body {
+  width: 1920px;
+  height: 1080px;
+  overflow: hidden;
+  margin: 0px;
+}
+
+
+#jannav, #janh1, #janfooter {
+  text-align: center;
+  background-color: #0f1b31;
+  color: white
+}
+
+
+#jandiv {
+  position:relative;
+}
+
+#janh1 {
+  text-align: center;
+  font-size: 36px;
+  margin: 0px;
+  background-color: #0f1b31;
+}
+
+#janfooter {
+  top: 815px;
+  left:870px;
+  position: absolute;
+  z-index: 3;
+  margin: 0px;
+}
+
+#gotit, #jhp {
+  position: absolute
+}
+
+#jhp {
+  z-index: 1;
+}
+
+#gotit {
+  top: 500px;
+  left: 1300px;
+  width: 200px;
+  z-index: 2;
+  cursor: pointer;
+}
+
+#gotit:hover{
+  box-shadow: 0px 0px 50px white;
+}
+
+#vinyl, #camera, #laptop, #phone, #headphones {
+  position: absolute;
+  z-index: 3;
+  cursor: pointer
+}
+
+#headphones {
+  top: 490px;
+  left: 1680px;
+}
+
+#vinyl {
+  top: 370px;
+  left: 1250px;
+}
+
+#laptop {
+  top: 380px;
+  left: 550px;
+}
+
+#camera {
+  top: 500px;
+  left:80px;
+}
+
+#phone {
+  top: 700px;
+  left: 1650px;
+}
+
+#vinyl:hover, #camera:hover, #laptop:hover, #phone:hover, #headphones:hover {
+  box-shadow: 0px 0px 50px white;
+}
+
+#exit {
+  position: absolute;
+  z-index: 3;
+  cursor: pointer;
+  top: 630px;
+  left: 350px;
+}
+
+#cgoback {
+  position: absolute;
+  z-index: 4;
+  cursor: pointer;
+}

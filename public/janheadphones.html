@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tile Hit Game</title>
+
+</head>
+<body>
+    <script> 
+      // Game script
+const GAME_WIDTH = 400;
+const GAME_HEIGHT = 600;
+const TILE_COUNT = 4;
+const TILE_SPEED = 5;
+const TILE_HEIGHT = 150;
+
+let score = 0;
+let gameOver = false;
+let tiles = [];
+let lastTileSpawn = 0;
+let gameLoop;
+let canvas, ctx;
+let audioStarted = false; // To track if audio has been started
+
+// Audio setup
+const audio = new Audio("https://cdn.glitch.global/5c21c86a-e865-47cb-8896-fcc760090cf0/NIKI%20-%20%20Backburner%20(Official%20Lyric%20Video).mp3?v=1734873147166");
+audio.loop = true; // Loop audio
+
+function initGame() {
+    canvas = document.createElement('canvas');
+    canvas.width = GAME_WIDTH;
+    canvas.height = GAME_HEIGHT;
+    document.body.insertBefore(canvas, document.body.firstChild);
+    ctx = canvas.getContext('2d');
+
+    const scoreDiv = document.createElement('div');
+    scoreDiv.id = 'score';
+    scoreDiv.style.position = 'absolute';
+    scoreDiv.style.top = '10px';
+    scoreDiv.style.left = '10px';
+    scoreDiv.style.fontSize = '24px';
+    document.body.appendChild(scoreDiv);
+
+    canvas.addEventListener('click', handleClick);
+    canvas.addEventListener('touchstart', handleTouch, { passive: false });
+
+    resetGame();
+    gameLoop = setInterval(update, 1000 / 60);
+}
+
+function resetGame() {
+    score = 0;
+    gameOver = false;
+    tiles = [];
+    lastTileSpawn = 0;
+    audioStarted = false; // Reset audioStarted on game restart
+    audio.pause(); // Stop audio
+    audio.currentTime = 0; // Reset audio to the beginning
+    updateScore();
+}
+
+function update() {
+    if (gameOver) return;
+
+    ctx.fillStyle = '#ffffff';
+    ctx.fillRect(0, 0, GAME_WIDTH, GAME_HEIGHT);
+
+    if (Date.now() - lastTileSpawn > 1000) {
+        spawnTile();
+        lastTileSpawn = Date.now();
+    }
+
+    for (let i = tiles.length - 1; i >= 0; i--) {
+        const tile = tiles[i];
+        tile.y += TILE_SPEED;
+
+        if (tile.y > GAME_HEIGHT && !tile.hit) {
+            endGame();
+            return;
+        }
+
+        if (tile.y > GAME_HEIGHT) {
+            tiles.splice(i, 1);
+            continue;
+        }
+
+        ctx.fillStyle = tile.hit ? '#666666' : '#000000';
+        ctx.fillRect(tile.x, tile.y, GAME_WIDTH / TILE_COUNT, TILE_HEIGHT);
+    }
+}
+
+function spawnTile() {
+    const column = Math.floor(Math.random() * TILE_COUNT);
+    tiles.push({
+        x: (GAME_WIDTH / TILE_COUNT) * column,
+        y: -TILE_HEIGHT,
+        hit: false
+    });
+}
+
+function handleClick(event) {
+    if (gameOver) {
+        resetGame();
+        return;
+    }
+
+    const rect = canvas.getBoundingClientRect();
+    const x = event.clientX - rect.left;
+    const column = Math.floor(x / (GAME_WIDTH / TILE_COUNT));
+    checkHit(column);
+}
+
+function handleTouch(event) {
+    event.preventDefault();
+    if (gameOver) {
+        resetGame();
+        return;
+    }
+
+    const rect = canvas.getBoundingClientRect();
+    const x = event.touches[0].clientX - rect.left;
+    const column = Math.floor(x / (GAME_WIDTH / TILE_COUNT));
+    checkHit(column);
+}
+
+function checkHit(column) {
+    const columnWidth = GAME_WIDTH / TILE_COUNT;
+    const columnX = column * columnWidth;
+
+    for (const tile of tiles) {
+        if (tile.x === columnX && !tile.hit && tile.y > 0) {
+            tile.hit = true;
+            score += 1;
+            updateScore();
+
+            // Start audio on first tile click
+            if (!audioStarted) {
+                audio.play()
+                    .then(() => console.log("Audio started"))
+                    .catch(err => console.error("Audio error:", err));
+                audioStarted = true;
+            }
+            return;
+        }
+    }
+}
+
+function updateScore() {
+    document.getElementById('score').textContent = `Score: ${score}`;
+}
+
+function endGame() {
+    gameOver = true;
+    ctx.fillStyle = 'rgba(0, 0, 0, 0.5)';
+    ctx.fillRect(0, 0, GAME_WIDTH, GAME_HEIGHT);
+
+    ctx.fillStyle = '#ffffff';
+    ctx.font = '48px Arial';
+    ctx.textAlign = 'center';
+    ctx.fillText('Game Over!', GAME_WIDTH / 2, GAME_HEIGHT / 2);
+    ctx.font = '24px Arial';
+    ctx.fillText('Click to restart', GAME_WIDTH / 2, GAME_HEIGHT / 2 + 40);
+}
+
+window.onload = initGame;
+
+  </script>
+</body>
+</html>

@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Polaroid Camera</title>
+<style>
+  /* General Styles */
+body {
+  font-family: 'Arial', sans-serif;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #f9f9f9;
+}
+
+.camera-container {
+  margin-top: 50px;
+  text-align: center;
+}
+
+#camera {
+  width: 200px;
+  height: 150px;
+  background-color: grey;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  font-size: 100px;
+  margin-bottom: 20px;
+  border: 2px solid #333;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+#capture-btn {
+  padding: 10px 20px;
+  background-color: black;
+  color: white;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+#capture-btn:hover {
+  background-color: #e63967;
+}
+
+/* Photo Gallery */
+#photos {
+  margin-top: 30px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px; /* Smaller gap to match smaller Polaroids */
+  justify-content: center;
+}
+
+/* Polaroid Style */
+.polaroid {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 150px; /* Reduced width for smaller Polaroids */
+  padding: 10px;
+  background: white;
+  border: 2px solid #ddd;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+  text-align: center;
+}
+
+.polaroid img {
+  width: 100%;
+  height: auto;
+  border-radius: 3px;
+  margin-bottom: 10px;
+}
+
+.polaroid .caption {
+  font-size: 12px; /* Smaller font size for captions */
+  font-style: italic;
+  color: #555;
+
+/* Camera Button */
+#capture-btn {
+  padding: 15px 30px; /* Increased padding for a larger button */
+  background-color: #ff477e;
+  color: white;
+  font-size: 20px; /* Increased font size for better visibility */
+  border: none;
+  border-radius: 8px; /* Slightly rounder corners */
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+#capture-btn:hover {
+  background-color: #e63967;
+  transform: scale(1.05); /* Button enlarges slightly on hover */
+}
+
+</style>
+</head>
+<body>
+  <div class="camera-container">
+    <div id="camera">📷</div>
+    <button id="capture-btn">Take Picture</button>
+  </div>
+  <div id="photos"></div>
+  <script> 
+    const captureBtn = document.getElementById('capture-btn');
+const photos = document.getElementById('photos');
+
+// Array of mock image URLs
+const mockImages = [
+  'https://cdn.glitch.global/20f0adc3-6bf1-437b-8c54-de6dacc181ed/DSC_0008.jpg?v=1734957282423',
+  'https://cdn.glitch.global/20f0adc3-6bf1-437b-8c54-de6dacc181ed/IMG_1365.jpg?v=1734957282042',
+  'https://cdn.glitch.global/20f0adc3-6bf1-437b-8c54-de6dacc181ed/IMG_3881.jpg?v=1734957281234',
+  'https://cdn.glitch.global/20f0adc3-6bf1-437b-8c54-de6dacc181ed/IMG_2029.jpg?v=1734957279602',
+  'https://cdn.glitch.global/20f0adc3-6bf1-437b-8c54-de6dacc181ed/tmp.jpg?v=1734957281482',
+  'https://cdn.glitch.global/20f0adc3-6bf1-437b-8c54-de6dacc181ed/ANMP0152.jpg?v=1734957281649',
+];
+
+let imageIndex = 0;
+
+// Event listener for the capture button
+captureBtn.addEventListener('click', () => {
+  // Create the Polaroid container
+  const polaroid = document.createElement('div');
+  polaroid.classList.add('polaroid');
+
+  // Create the image element
+  const img = document.createElement('img');
+  img.src = mockImages[imageIndex];
+
+  // Create the caption
+  const caption = document.createElement('div');
+  caption.classList.add('caption');
+  caption.textContent = `Photo ${imageIndex + 1}`;
+
+  // Append the image and caption to the Polaroid container
+  polaroid.appendChild(img);
+  polaroid.appendChild(caption);
+
+  // Add the Polaroid to the photos container
+  photos.appendChild(polaroid);
+
+  // Cycle through the mock images
+  imageIndex = (imageIndex + 1) % mockImages.length;
+});
+
+  </script>
+</body>
+</html>
